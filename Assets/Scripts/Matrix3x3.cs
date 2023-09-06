@@ -193,15 +193,15 @@ public class Matrix3x3 {
 	// Operators
 	// Multiply two matrices together
 	public static Matrix3x3 operator* (Matrix3x3 b, Matrix3x3 c) {
-		// -- Your Code here --
 		Matrix3x3 a = new();
-		for(int y = 0; y< 3; y++)
+		for(int y = 0; y < 3; y++)
         {
 			Vector3 v = new();
-			for(int x = 0; x< 3; x++)
+			for(int x = 0; x < 3; x++)
             {
-				v[x] = Vector3.Dot(b.m[y],c.GetColumn(x));
+				v[x] = Vector3.Dot(b.GetRow(y), c.GetColumn(x));
             }
+			a.SetRow(y, v);
         }
 		return a;
 	}
@@ -219,7 +219,7 @@ public class Matrix3x3 {
 
 	// Test the equality of this matrix and another
 	public bool Equals(Matrix3x3 m2) {
-		return this.m.Select(x => x.Equals(m2.m)).Aggregate((a, c) => a && c);
+		return m.Zip(m2.m, (a,b) => a.Equals(b)).Aggregate((a,c)=>a&&c);
 	}
 
 }
